@@ -1,6 +1,6 @@
 import os
 import zipfile
-import pandas as pd
+print(1)
 
 # ✅ Step 1: 设置 Kaggle 凭据（推荐先手动放 kaggle.json 到 ~/.kaggle/）
 os.environ['KAGGLE_USERNAME'] = 'ordacelore'
