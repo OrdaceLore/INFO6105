@@ -9,7 +9,7 @@ os.environ['KAGGLE_KEY'] = '6c7cecf1731724d63431f5763d0ef91c'
 # ✅ Step 2: 下载 Kaggle 数据集（例子是 Salary Prediction 数据）
 dataset = 'amirmahdiabbootalebi/salary-by-job-title-and-country'
 os.system(f'kaggle datasets download -d {dataset}')
-
+# bad
 # ✅ Step 3: 解压文件
 zip_file = dataset.split('/')[1] + '.zip'
 with zipfile.ZipFile(zip_file, 'r') as zip_ref:
