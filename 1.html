@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML in HTML with TensorFlow.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Machine Learning in HTML</h1>
+    <p>This example uses TensorFlow.js to predict values using linear regression.</p>
+
+    <label for="inputValue">Enter a number: </label>
+    <input type="number" id="inputValue" placeholder="Enter a number">
+    <button onclick="predict()">Predict</button>
+
+    <h2>Prediction: <span id="output">N/A</span></h2>
+
+    <script>
+        // Step 1: Create a simple linear regression model
+        const model = tf.sequential();
+        model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+
+        // Step 2: Compile the model with a loss function and optimizer
+        model.compile({
+            loss: 'meanSquaredError',
+            optimizer: 'sgd'
+        });
+
+        // Step 3: Provide training data (x: input, y: output)
+        const xs = tf.tensor2d([1, 2, 3, 4], [4, 1]); // Inputs
+        const ys = tf.tensor2d([2, 4, 6, 8], [4, 1]); // Outputs
+
+        // Step 4: Train the model
+        async function trainModel() {
+            await model.fit(xs, ys, { epochs: 500 });
+            console.log("Model trained!");
+        }
+
+        trainModel();
+
+        // Step 5: Predict based on user input
+        async function predict() {
+            const inputValue = document.getElementById("inputValue").value;
+            if (inputValue === "") {
+                alert("Please enter a number!");
+                return;
+            }
+
+            const inputTensor = tf.tensor2d([parseFloat(inputValue)], [1, 1]);
+            const prediction = model.predict(inputTensor);
+            const outputValue = prediction.dataSync()[0];
+
+            document.getElementById("output").innerText = outputValue.toFixed(2);
+        }
+    </script>
+</body>
+</html>
